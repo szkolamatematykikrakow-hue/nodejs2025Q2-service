@@ -60,26 +60,26 @@ export class TracksService {
       throw new BadRequestException('Invalid UUID');
     }
 
-     const track = await this.prisma.track.findUnique({
-       where: { id },
-     });
+    const track = await this.prisma.track.findUnique({
+      where: { id },
+    });
 
     if (!track) {
       throw new NotFoundException('Track not found');
     }
 
-     // Find all favorites that contain this track
-     const favorites = await this.prisma.favorites.findMany({
-       where: {
-         tracks: {
-           some: { id },
-         },
-       },
-     });
+    // Find all favorites that contain this track
+    const favorites = await this.prisma.favorites.findMany({
+      where: {
+        tracks: {
+          some: { id },
+        },
+      },
+    });
 
-     // Remove track from favorites
-     await Promise.all(
-       favorites.map((favorite) =>
+    // Remove track from favorites
+    await Promise.all(
+      favorites.map((favorite) =>
         this.prisma.favorites.update({
           where: { id: favorite.id },
           data: {
