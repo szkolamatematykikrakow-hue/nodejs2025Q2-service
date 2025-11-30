@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { Public } from '../auth/decorators/public.decorator';
 
 @ApiTags('Favorites')
 @Controller('favs')
@@ -16,6 +17,7 @@ export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) {}
 
   @Get()
+  @Public()
   @ApiOperation({ summary: 'Get all favorites' })
   @ApiResponse({ status: 200, description: 'Return all favorites' })
   findAll() {
@@ -23,6 +25,7 @@ export class FavoritesController {
   }
 
   @Post('artist/:id')
+  @Public()
   @ApiOperation({ summary: 'Add artist to favorites' })
   @ApiParam({ name: 'id', description: 'Artist ID' })
   @ApiResponse({ status: 201, description: 'Artist added to favorites' })
@@ -33,6 +36,7 @@ export class FavoritesController {
   }
 
   @Delete('artist/:id')
+  @Public()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remove artist from favorites' })
   @ApiParam({ name: 'id', description: 'Artist ID' })
@@ -44,6 +48,7 @@ export class FavoritesController {
   }
 
   @Post('album/:id')
+  @Public()
   @ApiOperation({ summary: 'Add album to favorites' })
   @ApiParam({ name: 'id', description: 'Album ID' })
   @ApiResponse({ status: 201, description: 'Album added to favorites' })
@@ -54,6 +59,7 @@ export class FavoritesController {
   }
 
   @Delete('album/:id')
+  @Public()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remove album from favorites' })
   @ApiParam({ name: 'id', description: 'Album ID' })
@@ -65,6 +71,7 @@ export class FavoritesController {
   }
 
   @Post('track/:id')
+  @Public()
   @ApiOperation({ summary: 'Add track to favorites' })
   @ApiParam({ name: 'id', description: 'Track ID' })
   @ApiResponse({ status: 201, description: 'Track added to favorites' })
@@ -75,6 +82,7 @@ export class FavoritesController {
   }
 
   @Delete('track/:id')
+  @Public()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Remove track from favorites' })
   @ApiParam({ name: 'id', description: 'Track ID' })

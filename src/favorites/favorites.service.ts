@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { validate as isUUID } from 'uuid';
@@ -32,7 +33,7 @@ export class FavoritesService {
     });
 
     if (!artist) {
-      throw new NotFoundException('Artist not found');
+      throw new UnprocessableEntityException('Artist not found');
     }
 
     const favorites = await this.prisma.favorites.findFirst();
@@ -103,7 +104,7 @@ export class FavoritesService {
     });
 
     if (!album) {
-      throw new NotFoundException('Album not found');
+      throw new UnprocessableEntityException('Album not found');
     }
 
     const favorites = await this.prisma.favorites.findFirst();
@@ -174,7 +175,7 @@ export class FavoritesService {
     });
 
     if (!track) {
-      throw new NotFoundException('Track not found');
+      throw new UnprocessableEntityException('Track not found');
     }
 
     const favorites = await this.prisma.favorites.findFirst();

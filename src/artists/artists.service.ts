@@ -79,25 +79,20 @@ export class ArtistsService {
       throw new NotFoundException(`Artist with ID ${id} not found`);
     }
 
-    // Najpierw ustawiamy track.artistId na null dla wszystkich utworów tego artysty
-    await this.prisma.track.updateMany({
-      where: { artistId: id },
-      data: { artistId: null },
-    });
-
-    // Update all albums to remove artist reference
-    await Promise.all(
-      artist.albums.map((album) =>
-        this.prisma.album.update({
-          where: { id: album.id },
-          data: { artistId: null },
-        }),
-      ),
-    );
-
-    // Remove artist from favorites
-    await Promise.all(
-      artist.favorites.map((favorite) =>
+    // Use transaction to ensure all updates happen atomically
+    await this.prisma.$transaction([
+      // Update all tracks to remove artist reference
+      this.prisma.track.updateMany({
+        where: { artistId: id },
+        data: { artistId: null },
+      }),
+      // Update all albums to remove artist reference
+      this.prisma.album.updateMany({
+        where: { artistId: id },
+        data: { artistId: null },
+      }),
+      // Remove artist from favorites
+      ...artist.favorites.map((favorite) =>
         this.prisma.favorites.update({
           where: { id: favorite.id },
           data: {
@@ -107,11 +102,10 @@ export class ArtistsService {
           },
         }),
       ),
-    );
-
-    // Delete the artist
-    await this.prisma.artist.delete({
-      where: { id },
-    });
+      // Delete the artist
+      this.prisma.artist.delete({
+        where: { id },
+      }),
+    ]);
   }
 }

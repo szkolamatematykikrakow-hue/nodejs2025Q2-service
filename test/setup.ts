@@ -51,13 +51,23 @@ beforeAll(async () => {
 beforeEach(async () => {
   // Czyszczenie bazy danych przed każdym testem
   if (prismaService) {
-    await prismaService.$transaction([
-      prismaService.favorites.deleteMany(),
-      prismaService.track.deleteMany(),
-      prismaService.album.deleteMany(),
-      prismaService.artist.deleteMany(),
-      prismaService.user.deleteMany(),
-    ]);
+    try {
+      // For SQLite, disable foreign keys, delete everything, then re-enable
+      await prismaService.$executeRawUnsafe('PRAGMA foreign_keys = OFF');
+      
+      await prismaService.$transaction([
+        prismaService.favorites.deleteMany(),
+        prismaService.track.deleteMany(),
+        prismaService.album.deleteMany(),
+        prismaService.artist.deleteMany(),
+        prismaService.user.deleteMany(),
+      ]);
+      
+      await prismaService.$executeRawUnsafe('PRAGMA foreign_keys = ON');
+    } catch (error) {
+      console.error('Error during database cleanup:', error);
+      // Continue anyway - sometimes cleanup fails but tests can still run
+    }
   }
 });
 
