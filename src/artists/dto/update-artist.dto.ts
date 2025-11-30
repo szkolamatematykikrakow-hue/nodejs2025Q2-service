@@ -7,7 +7,7 @@ export class UpdateArtistDto {
     minLength: 1,
     maxLength: 255,
     example: 'John Doe',
-    required: false
+    required: false,
   })
   @IsString()
   @MinLength(1)
@@ -17,8 +17,8 @@ export class UpdateArtistDto {
   @ApiProperty({
     description: 'Whether artist has won Grammy',
     example: true,
-    required: false
+    required: false,
   })
   @IsBoolean()
   grammy?: boolean;
-} 
+}

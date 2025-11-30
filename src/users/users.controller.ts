@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, HttpCode, HttpStatus, BadRequestException, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  BadRequestException,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
@@ -32,12 +44,17 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updatePasswordDto: UpdatePasswordDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+  ) {
     if (!isUUID(id)) {
       throw new BadRequestException('Invalid UUID');
     }
     if (!updatePasswordDto.oldPassword || !updatePasswordDto.newPassword) {
-      throw new BadRequestException('Old password and new password are required');
+      throw new BadRequestException(
+        'Old password and new password are required',
+      );
     }
     return this.usersService.update(id, updatePasswordDto);
   }
@@ -50,4 +67,4 @@ export class UsersController {
     }
     return this.usersService.remove(id);
   }
-} 
+}

@@ -6,7 +6,7 @@ export class CreateAlbumDto {
     description: 'Album name',
     minLength: 1,
     maxLength: 255,
-    example: 'Innuendo'
+    example: 'Innuendo',
   })
   @IsString()
   name: string;
@@ -15,7 +15,7 @@ export class CreateAlbumDto {
     description: 'Release year',
     minimum: 1900,
     maximum: new Date().getFullYear(),
-    example: 1991
+    example: 1991,
   })
   @IsInt()
   @Min(1900)
@@ -25,9 +25,9 @@ export class CreateAlbumDto {
   @ApiProperty({
     description: 'Artist ID',
     required: false,
-    example: '123e4567-e89b-12d3-a456-426614174000'
+    example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @IsOptional()
   @IsString()
   artistId?: string;
-} 
+}

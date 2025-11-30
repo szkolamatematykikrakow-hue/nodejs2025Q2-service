@@ -10,4 +10,4 @@ import { ArtistsModule } from '../artists/artists.module';
   providers: [AlbumsService],
   exports: [AlbumsService],
 })
-export class AlbumsModule {} 
+export class AlbumsModule {}

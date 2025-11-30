@@ -23,7 +23,7 @@ export class ArtistsService {
   constructor(
     private readonly albumsService: AlbumsService,
     private readonly tracksService: TracksService,
-    private prisma: PrismaService
+    private prisma: PrismaService,
   ) {}
 
   async findAll(): Promise<ArtistResponse[]> {
@@ -48,7 +48,10 @@ export class ArtistsService {
     });
   }
 
-  async update(id: string, updateArtistDto: UpdateArtistDto): Promise<ArtistResponse> {
+  async update(
+    id: string,
+    updateArtistDto: UpdateArtistDto,
+  ): Promise<ArtistResponse> {
     const artist = await this.prisma.artist.findUnique({
       where: { id },
     });
@@ -111,4 +114,4 @@ export class ArtistsService {
       where: { id },
     });
   }
-} 
+}

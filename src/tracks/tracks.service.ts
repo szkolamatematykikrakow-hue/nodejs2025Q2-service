@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { Track } from './interfaces/track.interface';
 import { CreateTrackDto } from './dto/create-track.dto';
@@ -17,7 +21,7 @@ export class TracksService {
     if (!isUUID(id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    const track = this.tracks.find(track => track.id === id);
+    const track = this.tracks.find((track) => track.id === id);
     if (!track) {
       throw new NotFoundException('Track not found');
     }
@@ -50,21 +54,35 @@ export class TracksService {
     if (!isUUID(id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    const trackIndex = this.tracks.findIndex(track => track.id === id);
+    const trackIndex = this.tracks.findIndex((track) => track.id === id);
     if (trackIndex === -1) {
       throw new NotFoundException('Track not found');
     }
 
-    if (updateTrackDto.name !== undefined && typeof updateTrackDto.name !== 'string') {
+    if (
+      updateTrackDto.name !== undefined &&
+      typeof updateTrackDto.name !== 'string'
+    ) {
       throw new BadRequestException('Name must be a string');
     }
-    if (updateTrackDto.duration !== undefined && typeof updateTrackDto.duration !== 'number') {
+    if (
+      updateTrackDto.duration !== undefined &&
+      typeof updateTrackDto.duration !== 'number'
+    ) {
       throw new BadRequestException('Duration must be a number');
     }
-    if (updateTrackDto.artistId !== undefined && updateTrackDto.artistId !== null && !isUUID(updateTrackDto.artistId)) {
+    if (
+      updateTrackDto.artistId !== undefined &&
+      updateTrackDto.artistId !== null &&
+      !isUUID(updateTrackDto.artistId)
+    ) {
       throw new BadRequestException('Invalid artist UUID');
     }
-    if (updateTrackDto.albumId !== undefined && updateTrackDto.albumId !== null && !isUUID(updateTrackDto.albumId)) {
+    if (
+      updateTrackDto.albumId !== undefined &&
+      updateTrackDto.albumId !== null &&
+      !isUUID(updateTrackDto.albumId)
+    ) {
       throw new BadRequestException('Invalid album UUID');
     }
 
@@ -81,7 +99,7 @@ export class TracksService {
     if (!isUUID(id)) {
       throw new BadRequestException('Invalid UUID');
     }
-    const trackIndex = this.tracks.findIndex(track => track.id === id);
+    const trackIndex = this.tracks.findIndex((track) => track.id === id);
     if (trackIndex === -1) {
       throw new NotFoundException('Track not found');
     }
@@ -89,11 +107,11 @@ export class TracksService {
   }
 
   removeArtist(artistId: string): void {
-    this.tracks = this.tracks.map(track => {
+    this.tracks = this.tracks.map((track) => {
       if (track.artistId === artistId) {
         return { ...track, artistId: null };
       }
       return track;
     });
   }
-} 
+}

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { validate as isUUID } from 'uuid';
 
@@ -230,4 +234,4 @@ export class FavoritesService {
       },
     });
   }
-} 
+}

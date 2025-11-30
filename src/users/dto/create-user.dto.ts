@@ -9,4 +9,4 @@ export class CreateUserDto {
   @IsString()
   @Matches(/^[a-zA-Z0-9]{3,30}/)
   password: string;
-} 
+}

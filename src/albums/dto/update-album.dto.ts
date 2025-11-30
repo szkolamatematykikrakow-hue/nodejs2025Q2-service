@@ -7,7 +7,7 @@ export class UpdateAlbumDto {
     minLength: 1,
     maxLength: 255,
     example: 'Innuendo',
-    required: false
+    required: false,
   })
   @IsOptional()
   @IsString()
@@ -18,7 +18,7 @@ export class UpdateAlbumDto {
     minimum: 1900,
     maximum: new Date().getFullYear(),
     example: 1991,
-    required: false
+    required: false,
   })
   @IsOptional()
   @IsInt()
@@ -29,9 +29,9 @@ export class UpdateAlbumDto {
   @ApiProperty({
     description: 'Artist ID',
     required: false,
-    example: '123e4567-e89b-12d3-a456-426614174000'
+    example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @IsOptional()
   @IsString()
   artistId?: string;
-} 
+}

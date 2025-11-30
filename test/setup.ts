@@ -13,12 +13,14 @@ beforeAll(async () => {
   try {
     app = await NestFactory.create(AppModule);
     const reflector = app.get(Reflector);
-    
-    app.useGlobalPipes(new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      forbidNonWhitelisted: true,
-    }));
+
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        transform: true,
+        forbidNonWhitelisted: true,
+      }),
+    );
 
     app.useGlobalGuards(new JwtAuthGuard(reflector));
 
@@ -37,9 +39,9 @@ beforeAll(async () => {
     await prismaService.$connect();
 
     await app.listen(4000);
-    
+
     // Czekamy na pełne uruchomienie aplikacji
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   } catch (error) {
     console.error('Error during app initialization:', error);
     throw error;
@@ -71,4 +73,4 @@ afterAll(async () => {
     console.error('Error during app cleanup:', error);
     throw error;
   }
-}); 
+});

@@ -11,4 +11,4 @@ import { PrismaModule } from '../prisma/prisma.module';
   providers: [ArtistsService],
   exports: [ArtistsService],
 })
-export class ArtistsModule {} 
+export class ArtistsModule {}

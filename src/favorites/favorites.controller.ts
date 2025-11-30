@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Delete, Param, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Param,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 
@@ -76,4 +84,4 @@ export class FavoritesController {
   removeTrack(@Param('id') id: string) {
     return this.favoritesService.removeTrack(id);
   }
-} 
+}

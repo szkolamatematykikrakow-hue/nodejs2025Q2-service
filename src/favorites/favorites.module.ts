@@ -9,4 +9,4 @@ import { PrismaModule } from '../prisma/prisma.module';
   providers: [FavoritesService],
   exports: [FavoritesService],
 })
-export class FavoritesModule {} 
+export class FavoritesModule {}

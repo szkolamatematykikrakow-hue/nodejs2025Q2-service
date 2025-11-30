@@ -16,7 +16,9 @@ export class AuthController {
 
   @Public()
   @Post('signup')
-  async signup(@Body() createUserDto: CreateUserDto): Promise<UserWithoutPassword> {
+  async signup(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<UserWithoutPassword> {
     return this.usersService.create(createUserDto);
   }
 
@@ -24,7 +26,7 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto) {
     const user = await this.usersService.findByLogin(loginUserDto.login);
-    
+
     if (!user || user.password !== loginUserDto.password) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -44,14 +46,14 @@ export class AuthController {
   async refresh(@Body() refreshTokenDto: RefreshTokenDto) {
     try {
       const payload = this.jwtService.verify(refreshTokenDto.refreshToken);
-      const accessToken = this.jwtService.sign({ 
-        userId: payload.userId, 
-        login: payload.login 
+      const accessToken = this.jwtService.sign({
+        userId: payload.userId,
+        login: payload.login,
       });
-      
+
       return { accessToken };
     } catch (error) {
       throw new UnauthorizedException('Invalid refresh token');
     }
   }
-} 
+}

@@ -1,5 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { Album } from './interfaces/album.interface';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { validate as isUUID } from 'uuid';
@@ -48,13 +51,27 @@ export class AlbumsService {
       throw new NotFoundException('Album not found');
     }
 
-    if (updateAlbumDto.name !== undefined && typeof updateAlbumDto.name !== 'string') {
+    if (
+      updateAlbumDto.name !== undefined &&
+      typeof updateAlbumDto.name !== 'string'
+    ) {
       throw new BadRequestException('Name must be a string');
     }
-    if (updateAlbumDto.year !== undefined && (typeof updateAlbumDto.year !== 'number' || updateAlbumDto.year < 1900 || updateAlbumDto.year > new Date().getFullYear())) {
-      throw new BadRequestException('Year must be a number between 1900 and current year');
+    if (
+      updateAlbumDto.year !== undefined &&
+      (typeof updateAlbumDto.year !== 'number' ||
+        updateAlbumDto.year < 1900 ||
+        updateAlbumDto.year > new Date().getFullYear())
+    ) {
+      throw new BadRequestException(
+        'Year must be a number between 1900 and current year',
+      );
     }
-    if (updateAlbumDto.artistId !== undefined && updateAlbumDto.artistId !== null && !isUUID(updateAlbumDto.artistId)) {
+    if (
+      updateAlbumDto.artistId !== undefined &&
+      updateAlbumDto.artistId !== null &&
+      !isUUID(updateAlbumDto.artistId)
+    ) {
       throw new BadRequestException('Invalid artistId UUID');
     }
 
@@ -112,4 +129,4 @@ export class AlbumsService {
       data: { artistId: null },
     });
   }
-} 
+}

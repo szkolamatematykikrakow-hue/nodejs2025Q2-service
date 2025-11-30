@@ -7,4 +7,4 @@ export interface User {
   updatedAt: number; // timestamp of last update
 }
 
-export type UserWithoutPassword = Omit<User, 'password'>; 
+export type UserWithoutPassword = Omit<User, 'password'>;

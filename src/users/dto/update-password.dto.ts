@@ -7,4 +7,4 @@ export class UpdatePasswordDto {
   @IsString()
   @Matches(/^[a-zA-Z0-9]{3,30}/)
   newPassword: string;
-} 
+}
